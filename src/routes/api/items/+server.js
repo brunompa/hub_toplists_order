@@ -6,7 +6,7 @@ import db from '../../../lib/db';
 
 /** @type {import('./$types').RequestHandler} */
 export function GET() {
-	const data = db.get();
+	const data = db.get('575');
 	return new Response(JSON.stringify(data));
 }
 
@@ -14,9 +14,10 @@ export function GET() {
 export async function POST({ request }) {
 	try {
 		const data = await request.json();
-		const res = db.update(data);
+		const res = db.update('575', data);
 		return new Response(JSON.stringify(res));
 	} catch (err) {
-		throw error(500, 'something wrong');
+		console.error(err);
+		throw error(500, 'something wrong', err);
 	}
 }

@@ -9,13 +9,12 @@ const _data = writable(data);
 
 export default {
 	// get all items from db
-	get() {
-		return get(_data);
-		// .sort((a, b) => a.order - b.order);
+	get(id) {
+		return get(_data).toplists[id].sort((a, b) => a.position - b.position);
 	},
 	// update all items of db
-	update(items) {
-		_data.update(() => items);
-		return get(_data);
+	update(id, items) {
+		_data.update((i) => ({ ...i, toplists: { ...i.toplists, [id]: items } }));
+		return this.get(id);
 	}
 };
